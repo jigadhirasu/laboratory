@@ -1,1 +1,15 @@
-syntax "proto3";
+syntax="proto3";
+
+package hello;
+
+service HelloService {
+    rpc SayHello (HelloTask) returns (HelloTask);
+}
+
+message HelloTask {
+    string name = 1;
+    string message = 2;
+    int32 timestamp = 3;
+    string response = 4;
+}
+
