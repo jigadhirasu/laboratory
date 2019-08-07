@@ -1,24 +1,34 @@
 package main
 
-// // HelloServiceServer can be embedded to have forward compatible implementations.
-// type HelloServiceServer struct{}
+import (
+	"context"
+	"fmt"
+	"time"
 
-// // SayHello SayHello
-// func (*HelloServiceServer) SayHello(ctx context.Context, req *hello.HelloTask) (*hello.HelloTask, error) {
-// 	req.Response = "XYZ"
-// 	return req, nil
-// }
+	"github.com/jigadhirasu/laboratory/xgrpc/hello"
+	"google.golang.org/grpc"
+)
 
-// func main() {
-// 	conn, _ := grpc.Dial("localhost:17887", grpc.WithInsecure())
-// 	defer conn.Close()
+func main() {
 
-// 	c := hello.NewHelloServiceClient(conn)
-// 	res, _ := c.SayHello(context.Background(), &hello.HelloTask{
-// 		Name:      "I",
-// 		Timestamp: int32(time.Now().Unix()),
-// 		Message:   "Hello",
-// 	})
+	conn, _ := grpc.Dial("localhost:17887", grpc.WithInsecure())
+	defer conn.Close()
 
-// 	log.Printf("%#v\n", res)
-// }
+	client := hello.NewHelloServiceClient(conn)
+
+	stream, _ := client.SayHello(context.Background())
+
+	go func() {
+		for {
+			ht, _ := stream.Recv()
+			fmt.Printf("%#v \n", ht)
+		}
+	}()
+
+	for i := 0; i < 10; i++ {
+		stream.Send(&hello.HelloTask{Name: "I'm Hello"})
+	}
+
+	stream.CloseSend()
+	<-time.After(time.Second * 3)
+}
