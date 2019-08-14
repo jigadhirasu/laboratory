@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HelloService } from './proto/hello.service';
+import {HelloTask, HX} from './hello_pb';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +9,21 @@ import { HelloService } from './proto/hello.service';
 export class AppComponent {
   title = 'xweb';
 
-  constructor(private hs:HelloService){}
+  constructor(){
+    const x = new HelloTask();
+    x.setMessage('ABC');
+    x.setTimestamp(123456789);
+    x.setName('ffff');
+    x.setXmanList([new HX(),new HX()]);
+
+    const y = x.serializeBinary();
+    console.log(y);
+
+    const z = HelloTask.deserializeBinary(y);
+    const hx = new HX();
+    hx.setX(123456);
+    z.addXman(hx,1);
+
+    console.log(z.toObject());
+  }
 }

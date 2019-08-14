@@ -11,24 +11,22 @@ import (
 
 func main() {
 
-	conn, _ := grpc.Dial("localhost:17887", grpc.WithInsecure())
+	conn, _ := grpc.Dial(":17888", grpc.WithInsecure())
 	defer conn.Close()
 
 	client := hello.NewHelloServiceClient(conn)
 
-	stream, _ := client.SayHello(context.Background())
+	stream, _ := client.SayHello(context.Background(), &hello.HelloTask{})
 
-	go func() {
-		for {
-			ht, _ := stream.Recv()
-			fmt.Printf("%#v \n", ht)
+	times := 0
+	for {
+		ht, _ := stream.Recv()
+		fmt.Printf("%#v \n", ht)
+		times++
+		if times > 10 {
+			break
 		}
-	}()
-
-	for i := 0; i < 10; i++ {
-		stream.Send(&hello.HelloTask{Name: "I'm Hello"})
+		<-time.After(time.Second)
 	}
-
 	stream.CloseSend()
-	<-time.After(time.Second * 3)
 }
