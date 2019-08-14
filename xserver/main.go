@@ -25,12 +25,14 @@ func (*UnimplementedHelloServiceServer) SayHello(req *hello.HelloTask, srv hello
 	count := 0
 	for {
 		count++
+		log.Println("count : ", count)
 		err := srv.Send(&hello.HelloTask{
 			Name:      fmt.Sprintf("server-%d", count),
 			Timestamp: int32(time.Now().Unix()),
 			Response:  "Hello",
 		})
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		<-time.After(time.Second)
