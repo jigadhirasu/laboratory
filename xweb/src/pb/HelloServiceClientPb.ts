@@ -30,7 +30,7 @@ export class HelloServiceClient {
     this.options_ = options;
   }
 
-  methodInfoSayHello = new grpcWeb.AbstractClientBase.MethodInfo(
+  methodInfoHelloStream = new grpcWeb.AbstractClientBase.MethodInfo(
     HelloTask,
     (request: HelloTask) => {
       return request.serializeBinary();
@@ -38,18 +38,18 @@ export class HelloServiceClient {
     HelloTask.deserializeBinary
   );
 
-  sayHello(
+  helloStream(
     request: HelloTask,
     metadata?: grpcWeb.Metadata) {
     return this.client_.serverStreaming(
       this.hostname_ +
-        '/hello.HelloService/SayHello',
+        '/hello.HelloService/HelloStream',
       request,
       metadata || {},
-      this.methodInfoSayHello);
+      this.methodInfoHelloStream);
   }
 
-  methodInfoXHello = new grpcWeb.AbstractClientBase.MethodInfo(
+  methodInfoHello = new grpcWeb.AbstractClientBase.MethodInfo(
     HelloTask,
     (request: HelloTask) => {
       return request.serializeBinary();
@@ -57,17 +57,17 @@ export class HelloServiceClient {
     HelloTask.deserializeBinary
   );
 
-  xHello(
+  hello(
     request: HelloTask,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
                response: HelloTask) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/hello.HelloService/XHello',
+        '/hello.HelloService/Hello',
       request,
       metadata || {},
-      this.methodInfoXHello,
+      this.methodInfoHello,
       callback);
   }
 

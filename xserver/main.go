@@ -73,9 +73,8 @@ func (*UnimplementedHelloServiceServer) HelloStream(req *hello.HelloTask, srv he
 }
 
 // Hello Hello
-func (*UnimplementedHelloServiceServer) Hello(ctx context.Context, req *hello.HelloTask) (*hello.HelloTask, error) {
-	req.Response = "1to1"
-	return req, nil
+func (*UnimplementedHelloServiceServer) Hello(ctx context.Context, req *hello.Empty) (*hello.HelloTask, error) {
+	return &hello.HelloTask{Response: "1to1"}, nil
 }
 
 func main() {

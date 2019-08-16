@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/jigadhirasu/laboratory/xgrpc/hello"
 	"google.golang.org/grpc"
@@ -20,7 +19,7 @@ func main() {
 	client := hello.NewHelloServiceClient(conn)
 
 	// 1to1
-	log.Println(client.Hello(context.Background(), &hello.HelloTask{Timestamp: int32(time.Now().Unix())}))
+	log.Println(client.Hello(context.Background(), &hello.Empty{}))
 
 	// Sto1
 	stream1, err := client.StreamHello(context.Background())

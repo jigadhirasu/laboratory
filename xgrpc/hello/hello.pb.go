@@ -79,25 +79,58 @@ func (m *HelloTask) GetResponse() string {
 	return ""
 }
 
+type Empty struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Empty) Reset()         { *m = Empty{} }
+func (m *Empty) String() string { return proto.CompactTextString(m) }
+func (*Empty) ProtoMessage()    {}
+func (*Empty) Descriptor() ([]byte, []int) {
+	return fileDescriptor_61ef911816e0a8ce, []int{1}
+}
+
+func (m *Empty) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Empty.Unmarshal(m, b)
+}
+func (m *Empty) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Empty.Marshal(b, m, deterministic)
+}
+func (m *Empty) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Empty.Merge(m, src)
+}
+func (m *Empty) XXX_Size() int {
+	return xxx_messageInfo_Empty.Size(m)
+}
+func (m *Empty) XXX_DiscardUnknown() {
+	xxx_messageInfo_Empty.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Empty proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*HelloTask)(nil), "hello.HelloTask")
+	proto.RegisterType((*Empty)(nil), "hello.Empty")
 }
 
 func init() { proto.RegisterFile("hello.proto", fileDescriptor_61ef911816e0a8ce) }
 
 var fileDescriptor_61ef911816e0a8ce = []byte{
-	// 177 bytes of a gzipped FileDescriptorProto
+	// 193 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xce, 0x48, 0xcd, 0xc9,
 	0xc9, 0xd7, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x73, 0x94, 0x22, 0xb9, 0x38, 0x3d,
 	0x40, 0x8c, 0x90, 0xc4, 0xe2, 0x6c, 0x21, 0x21, 0x2e, 0x96, 0xbc, 0xc4, 0xdc, 0x54, 0x09, 0x46,
 	0x05, 0x46, 0x0d, 0xce, 0x20, 0x30, 0x5b, 0x48, 0x86, 0x8b, 0xb3, 0x24, 0x33, 0x37, 0xb5, 0xb8,
 	0x24, 0x31, 0xb7, 0x40, 0x82, 0x59, 0x81, 0x51, 0x83, 0x35, 0x08, 0x21, 0x20, 0x24, 0xc5, 0xc5,
-	0x51, 0x94, 0x5a, 0x5c, 0x90, 0x9f, 0x57, 0x9c, 0x2a, 0xc1, 0x02, 0xd6, 0x05, 0xe7, 0x1b, 0x3d,
-	0x62, 0xe4, 0xe2, 0x01, 0x9b, 0x1d, 0x9c, 0x5a, 0x54, 0x96, 0x99, 0x9c, 0x2a, 0x64, 0xcd, 0x25,
-	0x18, 0x5c, 0x52, 0x94, 0x9a, 0x98, 0x0b, 0x11, 0x05, 0x33, 0x85, 0x04, 0xf4, 0x20, 0xae, 0x82,
-	0xbb, 0x42, 0x0a, 0x43, 0x44, 0x83, 0xd1, 0x80, 0x51, 0xc8, 0x98, 0x8b, 0x1b, 0x49, 0x33, 0x71,
-	0xda, 0x40, 0x9a, 0x48, 0xb4, 0xcb, 0x80, 0x51, 0x48, 0x9b, 0x8b, 0x95, 0x68, 0x3b, 0x92, 0xd8,
-	0xc0, 0xa1, 0x69, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x34, 0xe0, 0xac, 0x44, 0x5c, 0x01, 0x00,
+	0x51, 0x94, 0x5a, 0x5c, 0x90, 0x9f, 0x57, 0x9c, 0x2a, 0xc1, 0x02, 0xd6, 0x05, 0xe7, 0x2b, 0xb1,
+	0x73, 0xb1, 0xba, 0xe6, 0x16, 0x94, 0x54, 0x1a, 0xdd, 0x63, 0xe4, 0xe2, 0x01, 0x5b, 0x12, 0x9c,
+	0x5a, 0x54, 0x96, 0x99, 0x9c, 0x2a, 0x64, 0xcd, 0x25, 0x18, 0x5c, 0x52, 0x94, 0x9a, 0x98, 0x0b,
+	0x11, 0x05, 0x33, 0x85, 0x04, 0xf4, 0x20, 0xce, 0x83, 0x3b, 0x47, 0x0a, 0x43, 0x44, 0x83, 0xd1,
+	0x80, 0x51, 0xc8, 0x98, 0x8b, 0x1b, 0x49, 0x33, 0x71, 0xda, 0x40, 0x9a, 0x48, 0xb4, 0xcb, 0x80,
+	0x51, 0x48, 0x9d, 0x8b, 0x15, 0x62, 0x07, 0x0f, 0x54, 0x12, 0xec, 0x1d, 0x4c, 0xa5, 0x49, 0x6c,
+	0xe0, 0x20, 0x35, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0xc7, 0xf9, 0xb6, 0x42, 0x61, 0x01, 0x00,
 	0x00,
 }
 
@@ -116,7 +149,7 @@ type HelloServiceClient interface {
 	StreamHelloStream(ctx context.Context, opts ...grpc.CallOption) (HelloService_StreamHelloStreamClient, error)
 	StreamHello(ctx context.Context, opts ...grpc.CallOption) (HelloService_StreamHelloClient, error)
 	HelloStream(ctx context.Context, in *HelloTask, opts ...grpc.CallOption) (HelloService_HelloStreamClient, error)
-	Hello(ctx context.Context, in *HelloTask, opts ...grpc.CallOption) (*HelloTask, error)
+	Hello(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*HelloTask, error)
 }
 
 type helloServiceClient struct {
@@ -224,7 +257,7 @@ func (x *helloServiceHelloStreamClient) Recv() (*HelloTask, error) {
 	return m, nil
 }
 
-func (c *helloServiceClient) Hello(ctx context.Context, in *HelloTask, opts ...grpc.CallOption) (*HelloTask, error) {
+func (c *helloServiceClient) Hello(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*HelloTask, error) {
 	out := new(HelloTask)
 	err := c.cc.Invoke(ctx, "/hello.HelloService/Hello", in, out, opts...)
 	if err != nil {
@@ -238,7 +271,7 @@ type HelloServiceServer interface {
 	StreamHelloStream(HelloService_StreamHelloStreamServer) error
 	StreamHello(HelloService_StreamHelloServer) error
 	HelloStream(*HelloTask, HelloService_HelloStreamServer) error
-	Hello(context.Context, *HelloTask) (*HelloTask, error)
+	Hello(context.Context, *Empty) (*HelloTask, error)
 }
 
 // UnimplementedHelloServiceServer can be embedded to have forward compatible implementations.
@@ -254,7 +287,7 @@ func (*UnimplementedHelloServiceServer) StreamHello(srv HelloService_StreamHello
 func (*UnimplementedHelloServiceServer) HelloStream(req *HelloTask, srv HelloService_HelloStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method HelloStream not implemented")
 }
-func (*UnimplementedHelloServiceServer) Hello(ctx context.Context, req *HelloTask) (*HelloTask, error) {
+func (*UnimplementedHelloServiceServer) Hello(ctx context.Context, req *Empty) (*HelloTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
 
@@ -336,7 +369,7 @@ func (x *helloServiceHelloStreamServer) Send(m *HelloTask) error {
 }
 
 func _HelloService_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloTask)
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -348,7 +381,7 @@ func _HelloService_Hello_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/hello.HelloService/Hello",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServiceServer).Hello(ctx, req.(*HelloTask))
+		return srv.(HelloServiceServer).Hello(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

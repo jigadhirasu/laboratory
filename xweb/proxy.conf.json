@@ -1,0 +1,6 @@
+{
+    "/hello.HelloService":{
+        "target":"https://grpc.qqegg.me/",
+        "secure":false
+    }
+}

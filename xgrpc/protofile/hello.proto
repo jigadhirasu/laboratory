@@ -6,7 +6,7 @@ service HelloService {
     rpc StreamHelloStream(stream HelloTask) returns (stream HelloTask);
     rpc StreamHello(stream HelloTask) returns (HelloTask);
     rpc HelloStream(HelloTask) returns (stream HelloTask);
-    rpc Hello(HelloTask) returns (HelloTask);
+    rpc Hello(Empty) returns (HelloTask);
 }
 
 message HelloTask {
@@ -14,3 +14,5 @@ message HelloTask {
     int32 timestamp = 3;
     string response = 4;
 }
+
+message Empty {}
