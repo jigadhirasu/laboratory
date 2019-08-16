@@ -3,19 +3,14 @@ syntax="proto3";
 package hello;
 
 service HelloService {
-    rpc SayHello (HelloTask) returns (stream HelloTask);
-    rpc XHello (HelloTask) returns (HelloTask);
+    rpc StreamHelloStream(stream HelloTask) returns (stream HelloTask);
+    rpc StreamHello(stream HelloTask) returns (HelloTask);
+    rpc HelloStream(HelloTask) returns (stream HelloTask);
+    rpc Hello(HelloTask) returns (HelloTask);
 }
 
 message HelloTask {
     string name = 1;
-    string message = 2;
     int32 timestamp = 3;
     string response = 4;
-    repeated HX xman = 5;
-}
-
-message HX {
-    string h = 1;
-    int64 x = 2;
 }
