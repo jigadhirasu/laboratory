@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"io"
 	"log"
 	"net"
 	"time"
@@ -14,30 +14,68 @@ import (
 // UnimplementedHelloServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedHelloServiceServer struct{}
 
-// XHello XHello
-func (*UnimplementedHelloServiceServer) XHello(ctx context.Context, req *hello.HelloTask) (*hello.HelloTask, error) {
-	req.Response = "Xhello"
-	return req, nil
-}
+// StreamHelloStream StreamHelloStream
+func (*UnimplementedHelloServiceServer) StreamHelloStream(srv hello.HelloService_StreamHelloStreamServer) error {
 
-//SayHello SayHello
-func (*UnimplementedHelloServiceServer) SayHello(req *hello.HelloTask, srv hello.HelloService_SayHelloServer) error {
-	count := 0
-	for {
-		count++
-		log.Println("count : ", count)
-		err := srv.Send(&hello.HelloTask{
-			Name:      fmt.Sprintf("server-%d", count),
-			Timestamp: int32(time.Now().Unix()),
-			Response:  "Hello",
-		})
-		if err != nil {
-			log.Println(err)
-			return err
+	go func() {
+		for {
+			in, err := srv.Recv()
+			if err == io.EOF {
+				return
+			}
+			if err != nil {
+				log.Println(err)
+				return
+			}
+
+			log.Println("StoS : ", in)
 		}
-		<-time.After(time.Second)
+	}()
+
+	tick := time.Tick(time.Second)
+	for {
+		ti := <-tick
+		srv.Send(&hello.HelloTask{Response: ti.Format("StoS : 15:04:05")})
 	}
 
+	return nil
+}
+
+// StreamHello StreamHello
+func (*UnimplementedHelloServiceServer) StreamHello(srv hello.HelloService_StreamHelloServer) error {
+
+	for i := 0; i < 3; i++ {
+		in, err := srv.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			log.Println(err)
+			return nil
+		}
+
+		log.Println("Sto1", in)
+	}
+
+	srv.SendAndClose(&hello.HelloTask{Response: "Sto1 Closed"})
+
+	return nil
+}
+
+// HelloStream HelloStream
+func (*UnimplementedHelloServiceServer) HelloStream(req *hello.HelloTask, srv hello.HelloService_HelloStreamServer) error {
+	log.Println("1toS : ", req)
+	for {
+		srv.Send(&hello.HelloTask{Timestamp: int32(time.Now().Unix())})
+		<-time.After(time.Second)
+	}
+	return nil
+}
+
+// Hello Hello
+func (*UnimplementedHelloServiceServer) Hello(ctx context.Context, req *hello.HelloTask) (*hello.HelloTask, error) {
+	req.Response = "1to1"
+	return req, nil
 }
 
 func main() {
