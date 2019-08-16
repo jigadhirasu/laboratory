@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'xweb';
 
   constructor(){
-    const service = new HelloServiceClient("https://grpc.qqegg.me");
+    const service = new HelloServiceClient("http://grpc.qqegg.me");
 
 
     const h1 = new HelloTask();
