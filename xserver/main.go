@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"io"
 	"log"
-	"net"
 	"time"
 
 	"github.com/jigadhirasu/laboratory/xgrpc/hello"
@@ -81,14 +81,31 @@ func main() {
 
 	log.SetFlags(log.Ltime | log.Lshortfile | log.LstdFlags)
 
-	listener, _ := net.Listen("tcp", ":17887")
+	address := ""
+	port := "17887"
+
+	cer, err := tls.LoadX509KeyPair("xx.crt", "xx.key")
+	if err != nil {
+		log.Println(err)
+		log.Println("Load x509 keyPair Error")
+		return
+	}
+	config := &tls.Config{Certificates: []tls.Certificate{cer}}
+	lis, err := tls.Listen("tcp", address+":"+port, config)
+	if err != nil {
+		log.Println(err)
+		log.Println("listen by TLS Error")
+		return
+	}
+
 	ss := grpc.NewServer()
 	hello.RegisterHelloServiceServer(ss, &UnimplementedHelloServiceServer{})
 
-	log.Println("Start listen to tcp :17887")
-	err := ss.Serve(listener)
+	log.Println("Start listen to tcp " + address + ":" + port)
+	err = ss.Serve(lis)
 	if err != nil {
 		log.Println("NO~~~NO~~~NO~~~")
+		return
 	}
 
 }

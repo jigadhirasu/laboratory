@@ -2,18 +2,21 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"log"
 
 	"github.com/jigadhirasu/laboratory/xgrpc/hello"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 func main() {
 
 	log.SetFlags(log.Llongfile)
 
-	conn, _ := grpc.Dial(":17887", grpc.WithInsecure())
+	creds := credentials.NewTLS(&tls.Config{InsecureSkipVerify: true})
+	conn, _ := grpc.Dial(":17887", grpc.WithTransportCredentials(creds))
 	defer conn.Close()
 
 	client := hello.NewHelloServiceClient(conn)
