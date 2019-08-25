@@ -1,6 +1,6 @@
 {
-    "/hello.HelloService":{
-        "target":"https://grpc.qqegg.me/",
+    "/hello":{
+        "target":"https://grpc.qqegg.me:443/",
         "secure":false
     }
 }

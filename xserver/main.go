@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"crypto/tls"
 	"io"
 	"log"
+	"net"
 	"time"
 
 	"github.com/jigadhirasu/laboratory/xgrpc/hello"
@@ -84,14 +84,15 @@ func main() {
 	address := ""
 	port := "17887"
 
-	cer, err := tls.LoadX509KeyPair("xx.crt", "xx.key")
-	if err != nil {
-		log.Println(err)
-		log.Println("Load x509 keyPair Error")
-		return
-	}
-	config := &tls.Config{Certificates: []tls.Certificate{cer}}
-	lis, err := tls.Listen("tcp", address+":"+port, config)
+	// cer, err := tls.LoadX509KeyPair("xx.crt", "xx.key")
+	// if err != nil {
+	// 	log.Println(err)
+	// 	log.Println("Load x509 keyPair Error")
+	// 	return
+	// }
+	// config := &tls.Config{Certificates: []tls.Certificate{cer}}
+	// lis, err := tls.Listen("tcp", address+":"+port, config)
+	lis, err := net.Listen("tcp", address+":"+port)
 	if err != nil {
 		log.Println(err)
 		log.Println("listen by TLS Error")

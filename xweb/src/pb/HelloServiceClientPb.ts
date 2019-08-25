@@ -9,7 +9,9 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import {HelloTask} from './hello_pb';
+import {
+  Empty,
+  HelloTask} from './hello_pb';
 
 export class HelloServiceClient {
   client_: grpcWeb.AbstractClientBase;
@@ -18,11 +20,10 @@ export class HelloServiceClient {
   options_: null | { [index: string]: string; };
 
   constructor (hostname: string,
-               credentials?: null | { [index: string]: string; },
-               options?: null | { [index: string]: string; }) {
+               credentials: null | { [index: string]: string; },
+               options: null | { [index: string]: string; }) {
     if (!options) options = {};
-    if (!credentials) credentials = {};
-    options['format'] = 'binary';
+    options['format'] = 'text';
 
     this.client_ = new grpcWeb.GrpcWebClientBase(options);
     this.hostname_ = hostname;
@@ -51,14 +52,14 @@ export class HelloServiceClient {
 
   methodInfoHello = new grpcWeb.AbstractClientBase.MethodInfo(
     HelloTask,
-    (request: HelloTask) => {
+    (request: Empty) => {
       return request.serializeBinary();
     },
     HelloTask.deserializeBinary
   );
 
   hello(
-    request: HelloTask,
+    request: Empty,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
                response: HelloTask) => void) {
